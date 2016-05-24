@@ -172,3 +172,32 @@ function convertToRoman(num) {
    }
    return (roman.reverse().join(''));
 }
+
+
+// Where art thou
+
+// Make a function that looks through an array of objects (first argument) and returns an array of all objects that have matching property and value pairs (second argument). Each property and value pair of the source object has to be present in the object from the collection if it is to be included in the returned array.
+
+
+function whereAreYou(collection, source) {
+  var arr = [];
+  var flag = true;
+  var sourceKey = Object.keys(source);
+
+      for (var i = 0; i < collection.length; i++){
+         for (var j = 0; j < sourceKey.length; j++){
+            if(collection[i].hasOwnProperty(sourceKey[j]) && source[sourceKey[j]] === collection[i][sourceKey[j]]){
+               flag = true;
+            } else {
+               flag = false;
+            }
+         }
+         if (flag){
+            arr.push(collection[i]);
+         } else {
+            flag = true;
+         }
+      }
+
+  return arr;
+}

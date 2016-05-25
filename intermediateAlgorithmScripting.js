@@ -261,7 +261,49 @@ function vowelLookup(vowel, newStr){
          removed.push('ay');
          newStr.push(removed.join(''));
          newStr = (newStr.join(''));
-         return newStr;                                      
+         return newStr;
       }
    }
+}
+
+// DNA Pairing
+
+// The DNA strand is missing the pairing element. Take each character, get its pair, and return the results as a 2d array.
+
+// Base pairs are a pair of AT and CG. Match the missing element to the provided character.
+
+// Return the provided character as the first element in each array.
+
+// For example, for the input GCG, return [["G", "C"], ["C","G"],["G", "C"]]
+
+// The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
+
+
+function pairElement(str) {
+   var arr1 = str.split('');
+   var arr2 = [];
+   var arr3 = [];
+
+   for (var i = 0; i < arr1.length; i++){
+      switch(arr1[i]){
+         case 'G':
+            arr2 = [arr1[i], 'C'];
+            arr3.push(arr2);
+            break;
+         case 'C':
+            arr2 = [arr1[i], 'G'];
+            arr3.push(arr2);
+            break;
+         case 'A':
+            arr2 = [arr1[i], 'T'];
+            arr3.push(arr2);
+            break;
+         case 'T':
+            arr2 = [arr1[i], 'A'];
+            arr3.push(arr2);
+            break;
+      }
+   }
+
+   return arr3;
 }

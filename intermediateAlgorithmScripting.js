@@ -224,8 +224,6 @@ function myReplace(str, before, after) {
 }
 
 function firstChar(before, after){
-   console.log(before);
-   console.log(after);
    if (before[0] === before[0].toUpperCase()){
       var newAfter = after.split('');
       newAfter.splice(0,1,newAfter[0].toUpperCase());

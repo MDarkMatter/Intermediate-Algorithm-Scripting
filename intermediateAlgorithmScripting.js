@@ -232,3 +232,36 @@ function firstChar(before, after){
       return after;
    }
 }
+
+
+// Translate the provided string to pig latin.
+
+// Pig Latin takes the first consonant (or consonant cluster) of an English word, moves it to the end of the word and suffixes an "ay".
+
+// If a word begins with a vowel you just add "way" to the end.
+
+function translatePigLatin(str) {
+  var newStr = str.split('');
+  var vowel = ['a', 'e', 'i', 'o', 'u'];
+   if (vowel.indexOf(newStr[0]) >= 0){
+     newStr.push('way');
+     return newStr.join('');
+   } else {
+      vowelLookup(vowel, newStr);
+   }
+
+  return newStr.join('');
+}
+
+function vowelLookup(vowel, newStr){
+   for (var i = 0; i < newStr.length; i++){
+      if (vowel.indexOf(newStr[i]) >= 0){
+         var whereIsIt = newStr.indexOf(newStr[i]);
+         var removed = newStr.splice(0, whereIsIt);
+         removed.push('ay');
+         newStr.push(removed.join(''));
+         newStr = (newStr.join(''));
+         return newStr;                                      
+      }
+   }
+}

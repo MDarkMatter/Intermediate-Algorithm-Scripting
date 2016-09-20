@@ -370,3 +370,28 @@ function uniteUnique(arr) {
 }
 
 // Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+function convertHTML(str) {
+    var options = ['&', '<', '>', '"', "'"];
+    for (var i = 0; i < options.length; i++) {
+        var newStr = search();
+        if (newStr !== str) {
+            break;
+        }
+    }
+
+    function search() {
+        switch (options[i]) {
+            case "&":
+                return str = str.replace(/&/gi, '&amp;');
+            case "<":
+                return str = str.replace(/</gi, '&lt;');
+            case ">":
+                return str = str.replace(/>/gi, '&gt;');
+            case "'":
+                return str = str.replace(/'/gi, '&apos;');
+            case '"':
+                return str = str.replace(/"/gi, '&quot;');
+        }
+    }
+    return newStr;
+}

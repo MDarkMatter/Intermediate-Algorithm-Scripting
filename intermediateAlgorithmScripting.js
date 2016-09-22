@@ -395,3 +395,111 @@ function convertHTML(str) {
     }
     return newStr;
 }
+
+// Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
+
+function spinalCase(str) {
+    str = str.replace(str[0], str[0].toLowerCase());
+    str = str.replace(/[^A-Za-z0-9]/gi, ' ');
+    var newStr = str.split('');
+    for (var i = 0; i < newStr.length; i++) {
+        if (newStr[i] === " ") {
+            newStr[i + 1] = newStr[i + 1].toUpperCase();
+            newStr.splice(i, 1);
+        }
+    }
+    console.log(newStr);
+    //working up to here.
+
+    for (var j = 0; j < newStr.length; j++) {
+        if (newStr[j] === newStr[j].toUpperCase()) {
+            newStr[j] = newStr[j].toLowerCase();
+            newStr.splice(j, 0, ' ');
+        }
+    }
+    console.log(newStr);
+    newStr = newStr.join('');
+    return newStr.replace(/\s/g, '-');
+}
+
+
+// Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+
+// The first two numbers in the Fibonacci sequence are 1 and 1. Every additional number in the sequence is the sum of the two previous numbers. The first six numbers of the Fibonacci sequence are 1, 1, 2, 3, 5 and 8.
+
+// For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than 10 are 1, 1, 3, and 5.
+
+function sumFibs(num) {
+
+    var firstDig = 1;
+    var secondDig = 1;
+    var sum;
+    var oddSum;
+    var arr = [1, 1];
+    var newArr = [];
+
+    order(firstDig, secondDig);
+    oddFib(arr);
+    return newArr.reduce(function(a, b) {
+        return a + b;
+    }, 0);
+
+    function order() {
+        do {
+            // console.log (firstDig, secondDig, '<', num, sum);
+            sum = firstDig + secondDig;
+            arr.push(sum);
+            firstDig = secondDig;
+            secondDig = sum;
+            sum = firstDig + secondDig;
+        } while (sum <= num);
+    }
+
+    function oddFib(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] % 2 !== 0) {
+                newArr.push(arr[i]);
+            }
+        }
+    }
+}
+
+
+// Sum all the prime numbers up to and including the provided number.
+
+// A prime number is defined as a number greater than one and having only two divisors, one and itself. For example, 2 is a prime number because it's only divisible by one and two.
+
+// The provided number may not be a prime.
+
+
+function sumPrimes(num) {
+    var nonEven = [];
+    var notPrime = [];
+    var condition;
+
+    for (var i = 2; i <= num; i++) {
+        if (i % 2 !== 0) {
+            nonEven.push(i);
+        }
+    }
+
+    for (var j = 1; j < nonEven.length; j++) {
+        for (var k = 2; k < nonEven[j]; k++) {
+            if ((nonEven[j] / k) % 1 === 0) {
+                notPrime.push(nonEven[j]);
+            }
+
+        }
+    }
+    nonEven.push(2);
+    var isPrime = nonEven.filter(removal);
+
+    function removal(value) {
+        if (notPrime.indexOf(value) === -1) {
+            return true;
+        }
+    }
+    return isPrime.reduce(function(a, b) {
+        return a + b;
+    }, 0);
+}

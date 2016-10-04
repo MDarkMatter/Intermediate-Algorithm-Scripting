@@ -503,3 +503,189 @@ function sumPrimes(num) {
         return a + b;
     }, 0);
 }
+
+
+// Find the smallest common multiple of the provided parameters that can be evenly divided by both, as well as by all sequential numbers in the range between these parameters.
+
+// The range will be an array of two numbers that will not necessarily be in numerical order.
+
+// e.g. for 1 and 3 - find the smallest common multiple of both 1 and 3 that is evenly divisible by all numbers between 1 and 3.
+
+
+function smallestCommons(arr) {
+    var multiple = [];
+    var gcm;
+    var isDiv = true;
+
+    arr.sort(function(a, b) {
+        return a - b;
+    });
+    var countUp = arr[1];
+    construct(arr);
+
+    while (countUp <= gcm) {
+        checkDiv(arr, gcm);
+        if (isDiv === true) {
+            return countUp;
+        } else {
+            isDiv = true;
+        }
+        countUp += arr[1];
+    }
+
+
+    //construct array of multiples
+    function construct(arr) {
+        gcm = 1;
+        for (var j = arr[0]; j <= arr[1]; j++) {
+            gcm *= j;
+        }
+    }
+
+    //check for divisability for each number between arr[0] and arr[1]
+    function checkDiv(arr, gcm) {
+        // console.log(arr[0], gcm);
+        for (var i = arr[0]; i < arr[1]; i++) {
+            if ((countUp / i) % 1 === 0) {
+                isDiv = true;
+            } else {
+                isDiv = false;
+                break;
+            }
+            console.log(isDiv, i, countUp, gcm);
+
+        }
+    }
+}
+
+
+
+// Create a function that looks through an array (first argument) and returns the first element in the array that passes a truth test (second argument).
+function findElement(arr, func) {
+    for (var i = 0; i < arr.length; i++) {
+        if (func(arr[i])) {
+            return arr[i];
+        }
+    }
+}
+
+
+// Drop the elements of an array (first argument), starting from the front, until the predicate (second argument) returns true.
+
+// The second argument, func, is a function you'll use to test the first elements of the array to decide if you should drop it or not.
+
+// Return the rest of the array, otherwise return an empty array.
+
+
+
+function dropElements(arr, func) {
+    var newArr = [];
+    var count = 0;
+    for (var i = 0; i < arr.length; i++) {
+        console.log(count, arr[i]);
+        if (func(arr[i]) === false) {
+            count++;
+        } else {
+            break;
+        }
+    }
+    arr.splice(0, count);
+    return arr;
+}
+
+// Flatten a nested array. You must account for varying levels of nesting.
+
+function steamrollArray(arr) {
+    var finalArr = [];
+    var newStr = arr.join(' ');
+    var count = 0;
+
+    newStr = newStr.replace(/\W/gi, '');
+    newStr = newStr.replace('objectObject', '{');
+    newStr = newStr.split('');
+
+    var arrBuild = newStr.map(function(num) {
+        var makeNum = Number(num);
+        if (Number.isNaN(makeNum)) {
+            return num;
+        } else {
+            return makeNum;
+        }
+
+    });
+
+    var objReplace = arrBuild.map(function(num, index) {
+        if (num === '{') {
+            arrBuild.splice(index, 1, {});
+        } else {
+            return num;
+        }
+    });
+
+    return arrBuild;
+}
+
+// Return an English translated sentence of the passed binary string.
+//
+// The binary string will be space separated.
+
+
+function binaryAgent(str) {
+    var newStr = str.split(' ');
+    var arr = newStr.map(function(num, index) {
+        return String.fromCharCode(parseInt(num, 2));
+    });
+    return arr.join('');
+}
+
+// Check if the predicate (second argument) is truthy on all elements of a collection (first argument).
+
+function truthCheck(collection, pre) {
+    var isTrue = 0;
+
+    for (var i = 0; i < collection.length; i++) {
+        console.log(collection[i][pre], Boolean(collection[i][pre]));
+
+        if (Boolean(collection[i][pre]) === false) {
+            return false;
+        } else {
+            isTrue++;
+        }
+    }
+    if (isTrue === collection.length) {
+        return true;
+    }
+}
+
+// Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
+//
+// For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+//
+// Calling this returned function with a single argument will then return the sum:
+//
+// var sumTwoAnd = addTogether(2);
+//
+// sumTwoAnd(3) returns 5.
+
+function addTogether() {
+    if (typeof(arguments[0]) !== 'number') {
+        console.log('if', typeof(arguments[0]), typeof(arguments[1]));
+        return undefined;
+    } else if (arguments.length > 1) {
+        console.log('elseif');
+        if (typeof(arguments[0]) !== 'number' || typeof(arguments[1]) !== 'number') {
+            return undefined;
+        }
+        return arguments[0] + arguments[1];
+    } else {
+        console.log('else');
+        var arg = arguments[0];
+        return function(y) {
+            if (typeof(arg) !== 'number' || typeof(y) !== 'number') {
+                return undefined;
+            } else {
+                return arg + y;
+            }
+        }
+    }
+}
